@@ -7,6 +7,16 @@ body {
     font-family: 'Barlow', sans-serif;
 }
 
+.Task{
+    transition: 0.3s;
+}
+
+.Task:hover{
+    transform: scale(1.3);  
+    cursor: pointer; 
+}
+
+
 @keyframes gradient {
 	0% {
 		background-position: 0% 50%;
@@ -17,4 +27,45 @@ body {
 	100% {
 		background-position: 0% 50%;
 	}
+}
+
+footer{
+    position: fixed;
+    padding: 10px 10px 0px 10px;
+    bottom: 0;
+    width: 100%;
+    color: white;
+    background: #000;
+    text-align: center;
+    animation:  color-change 10s ease-in-out infinite;
+    margin-top: 30px;
+}
+
+@keyframes color-change{
+    0%{
+        background: #000;
+        color: white;
+    }
+    16%{
+        background:#0079C4;
+    }
+    32%{
+        background:#FAAC86;
+    }
+    48%{
+        background:#E61F34;
+        color: white;
+    }
+    64%{
+        background:#C71A2E;
+        color: white;
+    }
+    80%{
+        background: #FFD63E;
+        color: black;
+    }
+    100%{
+        background: #FFD53B;
+        color: black;
+    }
 }
