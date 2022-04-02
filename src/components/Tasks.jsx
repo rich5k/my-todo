@@ -2,6 +2,7 @@ import Footer from "./Footer";
 import Task from "./Task";
 import {useState,useEffect} from 'react';
 const Tasks = () => {
+    
     const [tasks,setTasks]=useState([]);
     const getData=()=>{
         fetch('data/taskCategory.json'
@@ -17,7 +18,7 @@ const Tasks = () => {
             return response.json();
         })
         .then(function(myJson) {
-            // console.log(myJson);
+            console.log(myJson);
             setTasks(myJson);
         });
     }
@@ -38,7 +39,7 @@ const Tasks = () => {
                         // console.log(tasks)
                         return(
 
-                            <Task key={task.id} name={task.name} date={task.updatedOn} />
+                            <Task key={task.id} id={task.id} name={task.name} date={task.updatedOn} />
                         )
                     })
                 }
