@@ -13,8 +13,8 @@ const Task = (props) => {
       console.log('ID: '+task);
     }
     return ( 
-        <div onClick={routeChange.bind(null,props.id)} className="Task bg-white my-6 mx-8 text-center rounded-lg p-4 grid grid-cols-4">
-            <div className="col-span-3">
+        <div className="Task bg-white my-6 mx-8 text-center rounded-lg p-4 grid grid-cols-4">
+            <div onClick={routeChange.bind(null,props.id)} className="col-span-3">
                 <div className="name font-bold">{props.name}</div>
                 <div className="grid grid-cols-3">
                     <div className="item-num">4 items</div>

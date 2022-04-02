@@ -16,6 +16,17 @@ body {
     cursor: pointer; 
 }
 
+.TaskItem{
+    transition: 0.3s;
+}
+
+.TaskItem:hover{
+    transform: scale(1.3);
+}
+
+.expand-item:hover, .item-checkbox input:hover{
+    cursor: pointer
+}
 
 @keyframes gradient {
 	0% {
