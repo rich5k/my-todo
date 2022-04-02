@@ -1,7 +1,29 @@
 import Footer from "./Footer";
 import Task from "./Task";
-import {useState} from 'react';
+import {useState,useEffect} from 'react';
 const Tasks = () => {
+    const [tasks,setTasks]=useState([]);
+    const getData=()=>{
+        fetch('data/taskCategory.json'
+        ,{
+        headers : { 
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+        }
+        }
+        )
+        .then(function(response){
+            // console.log(response)
+            return response.json();
+        })
+        .then(function(myJson) {
+            // console.log(myJson);
+            setTasks(myJson);
+        });
+    }
+    useEffect(()=>{
+        getData()
+    },[])
     const [isHidden, setHidden] = useState("false");
     const ToggleClass = () => {
         setHidden(!isHidden); 
@@ -11,8 +33,15 @@ const Tasks = () => {
             <div></div>
             <div>
                 <div className="text-3xl text-white font-bold">Tasks</div>
-                <Task />
-                <Task />
+                {
+                    tasks && tasks.length>0 && tasks.map((task)=>{
+                        // console.log(tasks)
+                        return(
+
+                            <Task key={task.id} name={task.name} date={task.updatedOn} />
+                        )
+                    })
+                }
             </div>
             <div>
                 <button onClick={ToggleClass} className="add-task text-green-600 bg-white p-4 text-xl font-bold rounded-full">

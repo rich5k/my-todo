@@ -1,15 +1,15 @@
-const Task = () => {
+const Task = (props) => {
     const deleteTask =()=>{
         alert("deleted");
     }
     return ( 
         <div className="Task bg-white my-6 mx-8 text-center rounded-lg p-4 grid grid-cols-4">
             <div className="col-span-3">
-                <div className="name font-bold">Groceries</div>
+                <div className="name font-bold">{props.name}</div>
                 <div className="grid grid-cols-3">
                     <div className="item-num">4 items</div>
                     <div></div>
-                    <div className="updated-date">2022-09-03</div>
+                    <div className="updated-date">{props.date}</div>
                 </div>
                 
             </div>
