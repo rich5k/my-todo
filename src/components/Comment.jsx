@@ -1,11 +1,11 @@
-const Comment = () => {
+const Comment = (props) => {
     const editComment= ()=>{
         alert("comment editted");
     }
     return ( 
         <div className="Comment grid grid-cols-4">
             <div className="comment-text col-span-3">
-                Hmmm... UseState is awesome
+                {props.message}
             </div>
             <div className="edit-comment">
                 <button onClick={editComment}>

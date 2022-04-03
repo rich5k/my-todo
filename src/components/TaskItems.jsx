@@ -11,7 +11,7 @@ const TaskItems = () => {
     const [tasks,setTasks]=useState([]);
     const [items,setItems]=useState([]);
     const getData=()=>{
-        fetch('../data/taskCategory.json'
+        fetch('http://localhost:8000/taskCategory'
         ,{
         headers : { 
             'Content-Type': 'application/json',
@@ -28,7 +28,7 @@ const TaskItems = () => {
             setTasks(myJson);
         });
 
-        fetch('../data/task.json'
+        fetch('http://localhost:8000/tasks'
         ,{
         headers : { 
             'Content-Type': 'application/json',
@@ -67,8 +67,14 @@ const TaskItems = () => {
                         }
                     })
                 }</div>
-                <TaskItem />
-                <TaskItem />
+                {
+                    items && items.length>0 && items.map((item)=>{
+                        if(item.taskCategoryId==id)
+                            return <TaskItem title={item.title} desc={item.description} comments={item.comments} />
+                        
+                    })
+                }
+                
                 <div className="completed-tasks">
                     <span className="font-bold text-lg text-left">Completed:</span>
                 </div>
