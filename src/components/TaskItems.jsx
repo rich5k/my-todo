@@ -103,7 +103,9 @@ const TaskItems = () => {
                 {
                     items && items.length>0 && items.map((item)=>(
                         (parseInt(item.taskCategoryId)===parseInt(id))?
-                            <TaskItem title={item.title} desc={item.description} comments={item.comments} />: ''
+                            <TaskItem id={item.id} title={item.title} desc={item.description} comments={item.comments} 
+                            status= {item.status} taskCategoryId={item.taskCategoryId} dateStarted={item.dateStarted} 
+                            dateEnded={item.dateEnded} getData={getData}/>: ''
                         
                     ))
                 }
