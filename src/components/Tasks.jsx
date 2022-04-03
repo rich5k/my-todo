@@ -1,12 +1,14 @@
 import Footer from "./Footer";
 import Task from "./Task";
 import {useState,useEffect} from 'react';
+import PuffLoader from "react-spinners/PuffLoader";
 const Tasks = () => {
     const [name,setName]=useState('');
     const [tasks,setTasks]=useState([]);
     const [items,setItems]=useState([]);
     const [itemNum, setItemNum]=useState(0);
-    
+    const loading="true";
+    const color= "#51E24A";
     const getData=()=>{
         fetch('http://localhost:8000/taskCategory'
         ,{
@@ -86,13 +88,18 @@ const Tasks = () => {
             <div>
                 <div className="text-3xl text-white font-bold">Tasks</div>
                 {
-                    tasks && items && tasks.length>0 && items.length>0&& tasks.map((task)=>(
+                    (tasks && items && tasks.length>0 && items.length>0)?
+                    tasks.map((task)=>(
                         // console.log(tasks)
                         
                             // calcItemNum(task.id),
                             <Task key={task.id} id={task.id} name={task.name} date={task.updatedOn} itemNum={itemNum} getData={getData} />
                         
-                    ))
+                    )):
+                    <div className="mt-30">
+                        <PuffLoader color={color} loading={loading} size={150} />
+
+                    </div>
                 }
             </div>
             <div>

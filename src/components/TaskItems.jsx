@@ -2,12 +2,15 @@ import { useNavigate, useParams} from "react-router-dom";
 import {useState,useEffect} from 'react';
 import Footer from "./Footer";
 import TaskItem from "./TaskItem";
+import PuffLoader from "react-spinners/PuffLoader";
 const TaskItems = () => {
     const {id}= useParams();
     const navigate = useNavigate();
     const goHome= ()=>{
         navigate("/");
     }
+    const loading="true";
+    const color= "#51E24A";
     const [tasks,setTasks]=useState([]);
     const [items,setItems]=useState([]);
     const [title,setTitle]=useState('');
@@ -94,16 +97,20 @@ const TaskItems = () => {
             <div>
                 <div className="text-3xl text-white font-bold text-center">
                     {
-                    tasks && tasks.length>0 && tasks.map((task)=>(
+                    (tasks && tasks.length>0)? tasks.map((task)=>(
                         // console.log(tasks)
                         (parseInt(task.id)===parseInt(id))?
                             task.name : ''
                         
-                    ))
+                    )):
+                    <div className="mt-30">
+                        <PuffLoader color={color} loading={loading} size={150} />
+
+                    </div>
                 }</div>
                 {
                     items && items.length>0 && items.map((item)=>(
-                        (parseInt(item.taskCategoryId)===parseInt(id))?
+                        (parseInt(item.taskCategoryId)===parseInt(id)&& item.status === "pending")?
                             <TaskItem id={item.id} title={item.title} desc={item.description} comments={item.comments} 
                             status= {item.status} taskCategoryId={item.taskCategoryId} dateStarted={item.dateStarted} 
                             dateEnded={item.dateEnded} getData={getData}/>: ''
@@ -113,6 +120,15 @@ const TaskItems = () => {
                 
                 <div className="completed-tasks">
                     <span className="font-bold text-lg text-left">Completed:</span>
+                    {
+                    items && items.length>0 && items.map((item)=>(
+                        (parseInt(item.taskCategoryId)===parseInt(id)&& item.status === "done")?
+                            <TaskItem id={item.id} title={item.title} desc={item.description} comments={item.comments} 
+                            status= {item.status} taskCategoryId={item.taskCategoryId} dateStarted={item.dateStarted} 
+                            dateEnded={item.dateEnded} getData={getData}/>: ''
+                        
+                    ))
+                }
                 </div>
             </div>
             <div className="text-center">
