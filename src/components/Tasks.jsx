@@ -27,7 +27,8 @@ const Tasks = () => {
     },[])
     const [isHidden, setHidden] = useState("false");
     const ToggleClass = () => {
-        setHidden(!isHidden); 
+        setHidden(!isHidden);
+        setName('');
     };
 
     const handleSubmit=(e)=>{
@@ -48,6 +49,8 @@ const Tasks = () => {
         )
         .then(()=>{
             console.log("new task added");
+            getData();
+            ToggleClass();
         })
     }
     return ( 

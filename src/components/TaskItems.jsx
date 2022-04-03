@@ -10,6 +10,7 @@ const TaskItems = () => {
     }
     const [tasks,setTasks]=useState([]);
     const [items,setItems]=useState([]);
+    
     const getData=()=>{
         fetch('http://localhost:8000/taskCategory'
         ,{
