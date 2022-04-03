@@ -5,8 +5,8 @@ const TaskItem = () => {
         setExpanded(!isExpanded); 
     };
     return ( 
-        <div className="TaskItem bg-white text-blue-600 font-bold my-6 mx-8 rounded-lg p-4">
-            <div className="grid grid-cols-2">
+        <div className="TaskItem bg-white text-blue-600 font-bold my-6 mx-8 rounded-lg pb-4">
+            <div className="grid grid-cols-2 p-4">
                 <div className="item-title">
                     Learn About React
                 </div>
@@ -24,6 +24,14 @@ const TaskItem = () => {
                 <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
                 </svg>
                 }
+            </div>
+            <div className={isExpanded? "extra-info font-thin":"extra-info font-thin hidden"}>
+                <div className="desc text-gray-500">
+                    <span className="font-bold">Desc:</span> To learn hooks ...
+                </div>
+                <div className="comments">
+                    <span className="font-bold">Comments:</span>
+                </div>
             </div>
         </div>
      );
