@@ -1,4 +1,5 @@
 import {useState} from 'react';
+import Comment from './Comment';
 const TaskItem = () => {
     const [isExpanded,setExpanded]=useState("false");
     const ToggleExpansion = () => {
@@ -31,6 +32,8 @@ const TaskItem = () => {
                 </div>
                 <div className="comments">
                     <span className="font-bold">Comments:</span>
+                    <Comment />
+                    <Comment />
                 </div>
             </div>
         </div>
