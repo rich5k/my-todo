@@ -4,6 +4,9 @@ import {useState,useEffect} from 'react';
 const Tasks = () => {
     const [name,setName]=useState('');
     const [tasks,setTasks]=useState([]);
+    const [items,setItems]=useState([]);
+    const [itemNum, setItemNum]=useState(0);
+    
     const getData=()=>{
         fetch('http://localhost:8000/taskCategory'
         ,{
@@ -20,6 +23,23 @@ const Tasks = () => {
         .then(function(myJson) {
             console.log(myJson);
             setTasks(myJson);
+        });
+
+        fetch('http://localhost:8000/tasks'
+        ,{
+        headers : { 
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+        }
+        }
+        )
+        .then(function(response){
+            // console.log(response)
+            return response.json();
+        })
+        .then(function(myJson) {
+            console.log(myJson);
+            setItems(myJson);
         });
     }
     useEffect(()=>{
@@ -53,19 +73,26 @@ const Tasks = () => {
             ToggleClass();
         })
     }
+
+    const calcItemNum=(taskId)=>{
+        items.map((item)=>(
+            item.taskCategoryId===taskId?
+            setItemNum(itemNum+1):''
+         ))
+    }
     return ( 
         <div className="Tasks text-center mt-8 grid grid-cols-3">
             <div></div>
             <div>
                 <div className="text-3xl text-white font-bold">Tasks</div>
                 {
-                    tasks && tasks.length>0 && tasks.map((task)=>{
+                    tasks && items && tasks.length>0 && items.length>0&& tasks.map((task)=>(
                         // console.log(tasks)
-                        return(
-
-                            <Task key={task.id} id={task.id} name={task.name} date={task.updatedOn} getData={getData} />
-                        )
-                    })
+                        
+                            // calcItemNum(task.id),
+                            <Task key={task.id} id={task.id} name={task.name} date={task.updatedOn} itemNum={itemNum} getData={getData} />
+                        
+                    ))
                 }
             </div>
             <div>

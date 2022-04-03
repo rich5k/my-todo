@@ -25,7 +25,7 @@ const Task = (props) => {
             <div onClick={routeChange.bind(null,props.id)} className="col-span-3">
                 <div className="name font-bold">{props.name}</div>
                 <div className="grid grid-cols-3">
-                    <div className="item-num">4 items</div>
+                    <div className="item-num">{props.itemNum} item(s)</div>
                     <div></div>
                     <div className="updated-date">{props.date.substring(0, 10)}</div>
                 </div>
