@@ -54,6 +54,7 @@ const TaskItems = () => {
     const ToggleClass = () => {
         setHidden(!isHidden);
         setTitle('');
+        setDesc('');
     };
 
     const handleSubmit=(e)=>{
