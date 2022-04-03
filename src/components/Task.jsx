@@ -1,7 +1,15 @@
 import { useNavigate} from "react-router-dom";
 const Task = (props) => {
     const deleteTask =()=>{
-        alert("deleted");
+        fetch('http://localhost:8000/taskCategory/'+ props.id
+        ,{
+            method: "DELETE",
+        }
+        )
+        .then(()=>{
+            console.log("task deleted");
+            props.getData();
+        })
     }
     const navigate = useNavigate();
     

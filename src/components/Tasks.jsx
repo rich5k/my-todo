@@ -63,7 +63,7 @@ const Tasks = () => {
                         // console.log(tasks)
                         return(
 
-                            <Task key={task.id} id={task.id} name={task.name} date={task.updatedOn} />
+                            <Task key={task.id} id={task.id} name={task.name} date={task.updatedOn} getData={getData} />
                         )
                     })
                 }
