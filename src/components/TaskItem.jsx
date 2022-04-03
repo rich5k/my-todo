@@ -4,12 +4,16 @@ const TaskItem = (props) => {
     const [isExpanded, setExpanded] = useState("false");
     const [isHidden, setIsHidden] = useState("false");
     const [message, setMessage] = useState("");
+    //toggles the visibility of the extra info(desc and co.) of the item
     const ToggleExpansion = () => {
         setExpanded(!isExpanded);
     };
+    //toggles the visibility of the add comment form
     const addComment = () => {
         setIsHidden(!isHidden);
     };
+
+    //handles the creation of a new comment
     const handleSubmit = (e) => {
         e.preventDefault();
         var title = props.title;
@@ -41,6 +45,8 @@ const TaskItem = (props) => {
                 setMessage('');
             })
     }
+
+    //deletes item
     const deleteTask = () => {
         fetch('http://localhost:8000/tasks/' + props.id
             , {
@@ -55,6 +61,8 @@ const TaskItem = (props) => {
 
     const [isChecked, setIsChecked] = useState(props.status === "pending"?"false":"true");
     console.log(isChecked,props.status);
+
+    //handles updating the status of the item when checked
     const handleCheck = (e) => {
         var checked=!isChecked;
         setIsChecked(checked);
@@ -92,6 +100,7 @@ const TaskItem = (props) => {
     return (
         <div className="TaskItem bg-white text-blue-600 font-bold my-6 mx-8 rounded-lg pb-4">
             <div className="grid grid-cols-4 p-4">
+                {/* item title */}
                 <div className={isChecked?"item-title col-span-3 line-through":"item-title col-span-3"}>
                     {props.title}
                 </div>
@@ -99,6 +108,7 @@ const TaskItem = (props) => {
                     <input type="checkbox" class="default:ring-2 rounded h-4 w-4 " onChange={handleCheck} defaultChecked={isChecked} />
                 </div>
             </div>
+            {/* dropdown arrow */}
             <div className="grid grid-cols-4">
                 {isChecked?<div></div>:
                     <div onClick={ToggleExpansion} className="expand-item col-span-3 text-gray-600 pl-4">
@@ -113,6 +123,7 @@ const TaskItem = (props) => {
                         }
                     </div>
                 }
+                {/* trash icon */}
                 <div className="delete-task pr-4 text-center text-red-600">
                     <button onClick={deleteTask}>
                         <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
@@ -122,6 +133,7 @@ const TaskItem = (props) => {
 
                 </div>
             </div>
+            {/* extra information for item */}
             {isChecked?'':
                 <div className={isExpanded ? "extra-info font-thin pl-4" : "extra-info font-thin pl-4 hidden"}>
                     <div className="desc text-gray-500">

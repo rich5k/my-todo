@@ -9,6 +9,7 @@ const Tasks = () => {
     const [itemNum, setItemNum]=useState(0);
     const loading="true";
     const color= "#51E24A";
+    //gets taskCategory and task data
     const getData=()=>{
         fetch('http://localhost:8000/taskCategory'
         ,{
@@ -48,11 +49,12 @@ const Tasks = () => {
         getData()
     },[])
     const [isHidden, setHidden] = useState("false");
+    // toggles visibility of add task category form
     const ToggleClass = () => {
         setHidden(!isHidden);
         setName('');
     };
-
+    // handles addition of task category
     const handleSubmit=(e)=>{
         e.preventDefault();
         var createdOn = new Date().toISOString();
@@ -70,7 +72,7 @@ const Tasks = () => {
         }
         )
         .then(()=>{
-            console.log("new task added");
+            console.log("new task category added");
             getData();
             ToggleClass();
         })
@@ -96,6 +98,7 @@ const Tasks = () => {
                             <Task key={task.id} id={task.id} name={task.name} date={task.updatedOn} itemNum={itemNum} getData={getData} />
                         
                     )):
+                    // show spinner when getting data
                     <div className="mt-30">
                         <PuffLoader color={color} loading={loading} size={150} />
 
@@ -108,7 +111,7 @@ const Tasks = () => {
                     <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4" />
                     </svg>
                 </button>
-
+                {/* section for task category addition form */}
                 <form action="" className={isHidden ? "add-form m-12 hidden" : "add-form m-12"}>
                     <input type="text" value={name} onChange={e=>setName(e.target.value)} class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg  block w-60 p-2.5  " placeholder="Groceries" required></input>
                     <button onClick={handleSubmit} class="mt-4 text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">Create</button>

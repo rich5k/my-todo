@@ -1,5 +1,6 @@
 import { useNavigate} from "react-router-dom";
 const Task = (props) => {
+    // handles deletion of task category
     const deleteTask =()=>{
         fetch('http://localhost:8000/taskCategory/'+ props.id
         ,{
@@ -12,7 +13,7 @@ const Task = (props) => {
         })
     }
     const navigate = useNavigate();
-    
+    // handles redirection to task's item page
     const routeChange = (task,id)=>{
         // id.preventDefault();
       let path = '/task';

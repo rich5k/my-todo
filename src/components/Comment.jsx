@@ -1,10 +1,13 @@
 import {useState} from 'react';
 const Comment = (props) => {
     const [isHidden, setIsHidden]= useState("false");
+    // toggles visibility of update comment form
     const editComment= ()=>{
         setIsHidden(!isHidden);
     }
     const [message, setMessage]=useState(props.message);
+
+    //handles updating of comment
     const handleSubmit=(e)=>{
         e.preventDefault();
         var title=props.title;

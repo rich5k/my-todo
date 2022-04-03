@@ -15,6 +15,7 @@ const TaskItems = () => {
     const [items,setItems]=useState([]);
     const [title,setTitle]=useState('');
     const [description, setDesc]=useState('');
+    // gets taskCategory and tasks data
     const getData=()=>{
         fetch('http://localhost:8000/taskCategory'
         ,{
@@ -54,12 +55,14 @@ const TaskItems = () => {
         getData()
     },[])
     const [isHidden, setHidden] = useState("false");
+    // toggles the visibilty of add item form
     const ToggleClass = () => {
         setHidden(!isHidden);
         setTitle('');
         setDesc('');
     };
 
+    //handles the addition of task's item
     const handleSubmit=(e)=>{
         e.preventDefault();
         var status = "pending";
@@ -117,7 +120,7 @@ const TaskItems = () => {
                         
                     ))
                 }
-                
+                {/* section for completed tasks */}
                 <div className="completed-tasks">
                     <span className="font-bold text-lg text-left">Completed:</span>
                     {
@@ -138,6 +141,7 @@ const TaskItems = () => {
                     </svg>
                 </button>
 
+                {/* add task item form */}
                 <form action="" className={isHidden ? "add-form m-12 hidden" : "add-form m-12"}>
                     <input type="text" value={title} onChange={e=>setTitle(e.target.value)} class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg  block w-60 p-2.5 mb-4 " placeholder="Groceries" required></input>
                     <input type="text" value={description} onChange={e=>setDesc(e.target.value)} class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg  block w-60 p-2.5  " placeholder="To help me stock up..." required></input>
