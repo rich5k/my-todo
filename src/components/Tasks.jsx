@@ -74,12 +74,12 @@ const Tasks = () => {
         })
     }
 
-    const calcItemNum=(taskId)=>{
-        items.map((item)=>(
-            item.taskCategoryId===taskId?
-            setItemNum(itemNum+1):''
-         ))
-    }
+    // const calcItemNum=(taskId)=>{
+    //     items.map((item)=>(
+    //         item.taskCategoryId===taskId?
+    //         setItemNum(itemNum+1):''
+    //      ))
+    // }
     return ( 
         <div className="Tasks text-center mt-8 grid grid-cols-3">
             <div></div>
