@@ -70,7 +70,7 @@ const TaskItem = (props) => {
         var taskCategoryId = parseInt(props.taskCategoryId);
         var comments = props.comments;
         var dateStarted = props.dateStarted;
-        var dateEnded = props.dateEnded;
+        var dateEnded = new Date().toISOString();
         
         const checkedItem = { title, description, status, taskCategoryId, comments, dateStarted, dateEnded };
 
