@@ -2,10 +2,10 @@ import Footer from "./Footer";
 import Task from "./Task";
 import {useState,useEffect} from 'react';
 const Tasks = () => {
-    
+    const [name,setName]=useState('');
     const [tasks,setTasks]=useState([]);
     const getData=()=>{
-        fetch('data/taskCategory.json'
+        fetch('http://localhost:8000/taskCategory'
         ,{
         headers : { 
             'Content-Type': 'application/json',
@@ -29,6 +29,27 @@ const Tasks = () => {
     const ToggleClass = () => {
         setHidden(!isHidden); 
     };
+
+    const handleSubmit=(e)=>{
+        e.preventDefault();
+        var createdOn = new Date().toISOString();
+        var updatedOn = new Date().toISOString();
+        const task = {name, createdOn,updatedOn};
+        
+        fetch('http://localhost:8000/taskCategory'
+        ,{
+            method: "POST",
+            headers : { 
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+            body: JSON.stringify(task)
+        }
+        )
+        .then(()=>{
+            console.log("new task added");
+        })
+    }
     return ( 
         <div className="Tasks text-center mt-8 grid grid-cols-3">
             <div></div>
@@ -52,8 +73,8 @@ const Tasks = () => {
                 </button>
 
                 <form action="" className={isHidden ? "add-form m-12 hidden" : "add-form m-12"}>
-                    <input type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg  block w-60 p-2.5  " placeholder="Groceries" required></input>
-                    <button type="submit" class="mt-4 text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">Create</button>
+                    <input type="text" value={name} onChange={e=>setName(e.target.value)} class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg  block w-60 p-2.5  " placeholder="Groceries" required></input>
+                    <button onClick={handleSubmit} class="mt-4 text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">Create</button>
                 </form>
 
             </div>

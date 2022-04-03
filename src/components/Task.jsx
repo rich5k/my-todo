@@ -19,7 +19,7 @@ const Task = (props) => {
                 <div className="grid grid-cols-3">
                     <div className="item-num">4 items</div>
                     <div></div>
-                    <div className="updated-date">{props.date}</div>
+                    <div className="updated-date">{props.date.substring(0, 10)}</div>
                 </div>
                 
             </div>
