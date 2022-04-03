@@ -7,11 +7,11 @@ const TaskItem = () => {
     };
     return ( 
         <div className="TaskItem bg-white text-blue-600 font-bold my-6 mx-8 rounded-lg pb-4">
-            <div className="grid grid-cols-2 p-4">
-                <div className="item-title">
+            <div className="grid grid-cols-4 p-4">
+                <div className="item-title col-span-3">
                     Learn About React
                 </div>
-                <div className="item-checkbox">
+                <div className="item-checkbox text-center">
                     <input type="checkbox" class="default:ring-2 rounded h-4 w-4 " />
                 </div>
             </div>
@@ -26,7 +26,7 @@ const TaskItem = () => {
                 </svg>
                 }
             </div>
-            <div className={isExpanded? "extra-info font-thin":"extra-info font-thin hidden"}>
+            <div className={isExpanded? "extra-info font-thin pl-4":"extra-info font-thin pl-4 hidden"}>
                 <div className="desc text-gray-500">
                     <span className="font-bold">Desc:</span> To learn hooks ...
                 </div>

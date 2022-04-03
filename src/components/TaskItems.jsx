@@ -49,7 +49,7 @@ const TaskItems = () => {
         getData()
     },[])
     return ( 
-        <div className="TaskItems text-white grid grid-cols-3 text-center mt-8">
+        <div className="TaskItems text-white grid grid-cols-3 mt-8">
             <div>
                 <button onClick={goHome} className="go-back ml-10 mt-4">
                     <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={4}>
@@ -58,7 +58,7 @@ const TaskItems = () => {
                 </button>
             </div>
             <div>
-                <div className="text-3xl text-white font-bold">
+                <div className="text-3xl text-white font-bold text-center">
                     {
                     tasks && tasks.length>0 && tasks.map((task)=>{
                         // console.log(tasks)
@@ -68,6 +68,10 @@ const TaskItems = () => {
                     })
                 }</div>
                 <TaskItem />
+                <TaskItem />
+                <div className="completed-tasks">
+                    <span className="font-bold text-lg text-left">Completed:</span>
+                </div>
             </div>
             <div></div>
 
