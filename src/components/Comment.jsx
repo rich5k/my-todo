@@ -28,7 +28,7 @@ const Comment = (props) => {
         // comments.push({message, createdOn, updatedOn});
         const updatedComment= {title, description,status,taskCategoryId, comments,dateStarted, dateEnded};
         
-        fetch('https://rich5k.github.io/my-todo-data/task.json/'+props.taskId
+        fetch('http://localhost:8000/tasks/'+props.taskId
         ,{
             method: "PUT",
             headers : { 

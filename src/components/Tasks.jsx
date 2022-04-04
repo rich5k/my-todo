@@ -10,7 +10,7 @@ const Tasks = () => {
     const color= "#51E24A";
     //gets taskCategory and task data
     const getData=()=>{
-        fetch('https://rich5k.github.io/my-todo-data/taskCategory.json'
+        fetch('http://localhost:8000/taskCategory'
         ,{
         headers : { 
             'Content-Type': 'application/json',
@@ -27,7 +27,7 @@ const Tasks = () => {
             setTasks(myJson);
         });
 
-        fetch('https://rich5k.github.io/my-todo-data/task.json'
+        fetch('http://localhost:8000/tasks'
         ,{
         headers : { 
             'Content-Type': 'application/json',
@@ -60,7 +60,7 @@ const Tasks = () => {
         var updatedOn = new Date().toISOString();
         const task = {name, createdOn,updatedOn};
         
-        fetch('https://rich5k.github.io/my-todo-data/taskCategory.json'
+        fetch('http://localhost:8000/taskCategory'
         ,{
             method: "POST",
             headers : { 

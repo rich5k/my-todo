@@ -17,7 +17,7 @@ const TaskItems = () => {
     const [description, setDesc]=useState('');
     // gets taskCategory and tasks data
     const getData=()=>{
-        fetch('https://rich5k.github.io/my-todo-data/taskCategory.json'
+        fetch('http://localhost:8000/taskCategory'
         ,{
         headers : { 
             'Content-Type': 'application/json',
@@ -34,7 +34,7 @@ const TaskItems = () => {
             setTasks(myJson);
         });
 
-        fetch('https://rich5k.github.io/my-todo-data/task.json'
+        fetch('http://localhost:8000/tasks'
         ,{
         headers : { 
             'Content-Type': 'application/json',
@@ -72,7 +72,7 @@ const TaskItems = () => {
         var dateEnded = null;
         const task = {title, description,status,taskCategoryId, comments,dateStarted, dateEnded};
         
-        fetch('https://rich5k.github.io/my-todo-data/task.json'
+        fetch('http://localhost:8000/tasks'
         ,{
             method: "POST",
             headers : { 
