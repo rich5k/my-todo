@@ -66,7 +66,7 @@ const TaskItems = () => {
         const payload= {title:title, description:description, status:status, taskCategoryId: taskCategoryId, comments:comments, dateStarted:dateStarted, dateEnded:dateEnded}
         addDoc(collectionRef,payload);
         ToggleClass();
-        getData();
+        // getData();
     }
     return ( 
         <div className="TaskItems text-white grid grid-cols-3 mt-8">
@@ -92,7 +92,7 @@ const TaskItems = () => {
                         (item.status === "pending")?
                             <TaskItem key={index} id={item.id} title={item.title} desc={item.description} comments={item.comments} 
                             status= {item.status} taskCategoryId={item.taskCategoryId} dateStarted={item.dateStarted} 
-                            dateEnded={item.dateEnded} getData={getData}/>: ''
+                            dateEnded={item.dateEnded} />: ''
                         
                     ))
                 }
@@ -105,7 +105,7 @@ const TaskItems = () => {
                         (item.status === "done")?
                             <TaskItem key={index} id={item.id} title={item.title} desc={item.description} comments={item.comments} 
                             status= {item.status} taskCategoryId={item.taskCategoryId} dateStarted={item.dateStarted} 
-                            dateEnded={item.dateEnded} getData={getData}/>: ''
+                            dateEnded={item.dateEnded} />: ''
                         
                     ))
                 }

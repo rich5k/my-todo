@@ -7,7 +7,7 @@ const Task = (props) => {
     const deleteTask =()=>{
         const docRef = doc(db, "taskCategory", props.id);
         deleteDoc(docRef);
-        props.getData();
+        
     }
     const navigate = useNavigate();
     // handles redirection to task's item page

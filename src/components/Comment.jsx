@@ -15,7 +15,7 @@ const Comment = (props) => {
         var title=props.title;
         var description = props.desc;
         var status = props.status;
-        var taskCategoryId = parseInt(props.taskCategoryId);
+        var taskCategoryId = props.taskCategoryId;
         var comments= props.comments;
         var dateStarted = props.dateStarted;
         var dateEnded = props.dateEnded;
@@ -25,12 +25,13 @@ const Comment = (props) => {
             if(parseInt(index)===parseInt(props.id)){
                 comment.message=message;
                 comment.updatedOn=updatedOn;
+                console.log(index,props.id);
             }
         })
         // comments.push({message, createdOn, updatedOn});
         // const updatedComment= {title, description,status,taskCategoryId, comments,dateStarted, dateEnded};
         
-        const docRef = doc(db, "task", props.id);
+        const docRef = doc(db, "task", props.taskId);
         const payload= {title:title, description:description, status:status, taskCategoryId: taskCategoryId, comments:comments, dateStarted:dateStarted, dateEnded:dateEnded}
         setDoc(docRef,payload);
         editComment();

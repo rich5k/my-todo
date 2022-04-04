@@ -3,7 +3,7 @@ import Task from "./Task";
 import React,{useState,useEffect} from 'react';
 import PuffLoader from "react-spinners/PuffLoader";
 import {db} from "../firebase";
-import { collection, onSnapshot,addDoc} from "firebase/firestore";
+import { collection, onSnapshot,addDoc, query, where, doc} from "firebase/firestore";
 const Tasks = () => {
     
     const [name,setName]=useState('');
@@ -59,12 +59,16 @@ const Tasks = () => {
 
     const calcItemNum=(taskId)=>{
         let itemNum=0;
-        items.map((item)=>{
-            if(item.taskCategoryId===taskId){
-                itemNum=itemNum+1;
-            }
+        
+        onSnapshot(query(collection(db,"task"),where("taskCategoryId","==",taskId)),snapshot=>{
             
-        })
+            // console.log(snapshot.docs.map(doc=>(doc.data(),doc.id)));
+            snapshot.docs.map(doc=>{
+                itemNum=itemNum+1;
+                console.log(doc.data());
+            });
+            
+        });
         return itemNum;
     }
     return ( 
@@ -74,10 +78,10 @@ const Tasks = () => {
                 <div className="text-3xl text-white font-bold">Tasks</div>
                 {console.log(tasks)}
                 {   
-                    (tasks && items && tasks.length>0 && items.length>0)?
+                    (tasks && tasks.length>0 )?
                     tasks.map((task,index)=>(
                         
-                        <Task key={index} id={task.id} name={task.name} date={task.updatedOn} itemNum={0} getData={getData} />
+                        <Task key={index} id={task.id} name={task.name} date={task.updatedOn} itemNum={calcItemNum(task.id)} getData={getData} />
                         
                     )):
                     // show spinner when getting data

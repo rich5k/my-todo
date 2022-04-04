@@ -33,7 +33,6 @@ const TaskItem = (props) => {
         const payload= {title:title, description:description, status:status, taskCategoryId: taskCategoryId, comments:comments, dateStarted:dateStarted, dateEnded:dateEnded}
         setDoc(docRef,payload);
         addComment();
-        props.getData();
         setMessage('');
     }
     
@@ -43,7 +42,7 @@ const TaskItem = (props) => {
         console.log(props.id);
         const docRef = doc(db, "task", props.id);
         deleteDoc(docRef);
-        props.getData();
+        
     }
 
     const [isChecked, setIsChecked] = useState(props.status === "pending"?false:true);
@@ -61,7 +60,7 @@ const TaskItem = (props) => {
         }else{
             status="pending";
         }
-        var taskCategoryId = parseInt(props.taskCategoryId);
+        var taskCategoryId = props.taskCategoryId;
         var comments = props.comments;
         var dateStarted = props.dateStarted;
         var dateEnded = new Date().toISOString();
@@ -123,7 +122,7 @@ const TaskItem = (props) => {
                         {props.comments && props.comments.length > 0 && props.comments.map((comment, index) => (
                             <Comment id={index} message={comment.message} title={props.title} desc={props.desc} status={props.status}
                                 taskCategoryId={props.taskCategoryId} comments={props.comments} dateStarted={props.dateStarted}
-                                dateEnded={props.dateEnded} taskId={props.id} createdOn={comment.createdOn} getData={props.getData()} />
+                                dateEnded={props.dateEnded} taskId={props.id} createdOn={comment.createdOn} />
                         ))}
                     </div>
                 </div>
