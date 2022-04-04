@@ -4,7 +4,7 @@ import Footer from "./Footer";
 import TaskItem from "./TaskItem";
 import PuffLoader from "react-spinners/PuffLoader";
 import {db} from "../firebase";
-import { collection, onSnapshot,addDoc} from "firebase/firestore";
+import { collection, onSnapshot,addDoc, getDoc, doc} from "firebase/firestore";
 const TaskItems = () => {
     const {id}= useParams();
     const navigate = useNavigate();
@@ -13,21 +13,30 @@ const TaskItems = () => {
     }
     const loading="true";
     const color= "#51E24A";
+    const [categoryName, setCategoryName]=useState('');
     const [tasks,setTasks]=useState([]);
     const [items,setItems]=useState([]);
     const [title,setTitle]=useState('');
     const [description, setDesc]=useState('');
     // gets taskCategory and tasks data
     const getData=()=>{
-        onSnapshot(collection(db,"taskCategory"),snapshot=>{
-            let categories=[];
-            console.log(snapshot.docs.map(doc=>(doc.data(),doc.id)));
-            snapshot.docs.map(doc=>{
-                categories.push({...doc.data(),id: doc.id})
+        
+        const docRef= doc(db,"taskCategory",id);
+        getDoc(docRef)
+        .then(doc=>{
+            setCategoryName(doc.data().name);
+            
+        })
+        // console.log(cName.data().name);
+        // onSnapshot(collection(db,"taskCategory"),snapshot=>{
+        //     let categories=[];
+        //     console.log(snapshot.docs.map(doc=>(doc.data(),doc.id)));
+        //     snapshot.docs.map(doc=>{
+        //         categories.push({...doc.data(),id: doc.id})
 
-            });
-            setTasks(categories);
-        });
+        //     });
+        //     setTasks(categories);
+        // });
 
         onSnapshot(collection(db,"task"),snapshot=>{
             let taskItems=[];
@@ -78,12 +87,7 @@ const TaskItems = () => {
             <div>
                 <div className="text-3xl text-white font-bold text-center">
                     {
-                    (tasks && tasks.length>0)? tasks.map((task)=>(
-                        
-                        (parseInt(task.id)===parseInt(id))?
-                            task.name : ''
-                        
-                    )):
+                    (categoryName)?categoryName :
                     <div className="mt-30">
                         <PuffLoader color={color} loading={loading} size={150} />
 
