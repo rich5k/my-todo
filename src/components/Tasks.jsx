@@ -2,7 +2,13 @@ import Footer from "./Footer";
 import Task from "./Task";
 import React,{useState,useEffect} from 'react';
 import PuffLoader from "react-spinners/PuffLoader";
+import {db} from "../firebase";
+// import { collection } from "firebase/firestore";
+import { collection, onSnapshot } from "firebase/firestore";
 const Tasks = () => {
+    // const ref1 = firebase.firestore().collection("taskCategory");
+    // const ref2 = firebase.firestore().collection("task");
+    // console.log(ref1);
     const [name,setName]=useState('');
     const [tasks,setTasks]=useState([]);
     const [items,setItems]=useState([]);
@@ -10,39 +16,66 @@ const Tasks = () => {
     const color= "#51E24A";
     //gets taskCategory and task data
     const getData=()=>{
-        fetch('http://localhost:8000/taskCategory'
-        ,{
-        headers : { 
-            'Content-Type': 'application/json',
-            'Accept': 'application/json'
-        }
-        }
-        )
-        .then(function(response){
-            // console.log(response)
-            return response.json();
-        })
-        .then(function(myJson) {
-            //console.log(myJson);
-            setTasks(myJson);
+        // fetch('http://localhost:8000/taskCategory'
+        // ,{
+        // headers : { 
+        //     'Content-Type': 'application/json',
+        //     'Accept': 'application/json'
+        // }
+        // }
+        // )
+        // .then(function(response){
+        //     // console.log(response)
+        //     return response.json();
+        // })
+        // .then(function(myJson) {
+        //     //console.log(myJson);
+        //     setTasks(myJson);
+        // });
+
+        // fetch('http://localhost:8000/tasks'
+        // ,{
+        // headers : { 
+        //     'Content-Type': 'application/json',
+        //     'Accept': 'application/json'
+        // }
+        // }
+        // )
+        // .then(function(response){
+        //     // console.log(response)
+        //     return response.json();
+        // })
+        // .then(function(myJson) {
+        //     //console.log(myJson);
+        //     setItems(myJson);
+        // });
+        onSnapshot(collection(db,"taskCategory"),snapshot=>{
+            let categories=[];
+            console.log(snapshot.docs.map(doc=>(doc.data(),doc.id)));
+            snapshot.docs.map(doc=>{
+                categories.push({...doc.data(),id: doc.id})
+
+            });
+            setTasks(categories);
         });
 
-        fetch('http://localhost:8000/tasks'
-        ,{
-        headers : { 
-            'Content-Type': 'application/json',
-            'Accept': 'application/json'
-        }
-        }
-        )
-        .then(function(response){
-            // console.log(response)
-            return response.json();
-        })
-        .then(function(myJson) {
-            //console.log(myJson);
-            setItems(myJson);
+        onSnapshot(collection(db,"task"),snapshot=>{
+            let taskItems=[];
+            console.log(snapshot.docs.map(doc=>(doc.data(),doc.id)));
+            snapshot.docs.map(doc=>{
+                taskItems.push({...doc.data(),id: doc.id})
+
+            });
+            setTasks(taskItems);
         });
+
+        // onSnapshot(collection(db, "task"),(querySnapshot)=>{
+        //     const taskItems=[];
+        //     querySnapshot.forEach((doc)=>{
+        //         taskItems.push(doc.data());
+        //     });
+        //     setItems(taskItems);
+        // });
     }
     useEffect(()=>{
         getData()
@@ -92,11 +125,12 @@ const Tasks = () => {
             <div></div>
             <div>
                 <div className="text-3xl text-white font-bold">Tasks</div>
-                {
+                {console.log(tasks)}
+                {   
                     (tasks && items && tasks.length>0 && items.length>0)?
-                    tasks.map((task)=>(
+                    tasks.map((task,index)=>(
                         
-                        <Task key={task.id} id={task.id} name={task.name} date={task.updatedOn} itemNum={calcItemNum(task.id)} getData={getData} />
+                        <Task key={index} id={task.id} name={task.name} date={task.updatedOn} itemNum={0} getData={getData} />
                         
                     )):
                     // show spinner when getting data
@@ -115,7 +149,7 @@ const Tasks = () => {
                 {/* section for task category addition form */}
                 <form action="" className={isHidden ? "add-form m-12 hidden" : "add-form m-12"}>
                     <input type="text" value={name} onChange={e=>setName(e.target.value)} class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg  block w-60 p-2.5  " placeholder="Groceries" required></input>
-                    <button onClick={handleSubmit} class="mt-4 text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">Create</button>
+                    <button disabled={!name} type="submit" onClick={handleSubmit} class="mt-4 text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">Create</button>
                 </form>
 
             </div>
