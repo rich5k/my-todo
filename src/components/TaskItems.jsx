@@ -3,6 +3,8 @@ import React, {useState,useEffect} from 'react';
 import Footer from "./Footer";
 import TaskItem from "./TaskItem";
 import PuffLoader from "react-spinners/PuffLoader";
+import {db} from "../firebase";
+import { collection, onSnapshot,addDoc} from "firebase/firestore";
 const TaskItems = () => {
     const {id}= useParams();
     const navigate = useNavigate();
@@ -17,39 +19,26 @@ const TaskItems = () => {
     const [description, setDesc]=useState('');
     // gets taskCategory and tasks data
     const getData=()=>{
-        fetch('http://localhost:8000/taskCategory'
-        ,{
-        headers : { 
-            'Content-Type': 'application/json',
-            'Accept': 'application/json'
-        }
-        }
-        )
-        .then(function(response){
-            // console.log(response)
-            return response.json();
-        })
-        .then(function(myJson) {
-            //console.log(myJson);
-            setTasks(myJson);
+        onSnapshot(collection(db,"taskCategory"),snapshot=>{
+            let categories=[];
+            console.log(snapshot.docs.map(doc=>(doc.data(),doc.id)));
+            snapshot.docs.map(doc=>{
+                categories.push({...doc.data(),id: doc.id})
+
+            });
+            setTasks(categories);
         });
 
-        fetch('http://localhost:8000/tasks'
-        ,{
-        headers : { 
-            'Content-Type': 'application/json',
-            'Accept': 'application/json'
-        }
-        }
-        )
-        .then(function(response){
-            // console.log(response)
-            return response.json();
-        })
-        .then(function(myJson) {
-            //console.log(myJson);
-            setItems(myJson);
+        onSnapshot(collection(db,"task"),snapshot=>{
+            let taskItems=[];
+            console.log(snapshot.docs.map(doc=>(doc.data(),doc.id)));
+            snapshot.docs.map(doc=>{
+                taskItems.push({...doc.data(),id: doc.id})
+
+            });
+            setItems(taskItems);
         });
+
     }
     useEffect(()=>{
         getData()
@@ -70,23 +59,12 @@ const TaskItems = () => {
         var comments= [];
         var dateStarted = new Date().toISOString();
         var dateEnded = null;
-        const task = {title, description,status,taskCategoryId, comments,dateStarted, dateEnded};
+        // const task = {title, description,status,taskCategoryId, comments,dateStarted, dateEnded};
         
-        fetch('http://localhost:8000/tasks'
-        ,{
-            method: "POST",
-            headers : { 
-                'Content-Type': 'application/json',
-                'Accept': 'application/json'
-            },
-            body: JSON.stringify(task)
-        }
-        )
-        .then(()=>{
-            console.log("new task added");
-            getData();
-            ToggleClass();
-        })
+        const collectionRef = collection(db, "taskCategory");
+        const payload= {title:title, description:description, status:status, taskCategoryId: taskCategoryId, comments:comments, dateStarted:dateStarted, dateEnded:dateEnded}
+        addDoc(collectionRef,payload);
+        ToggleClass();
     }
     return ( 
         <div className="TaskItems text-white grid grid-cols-3 mt-8">
