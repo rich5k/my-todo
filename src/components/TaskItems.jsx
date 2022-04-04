@@ -94,21 +94,23 @@ const TaskItems = () => {
 
                     </div>
                 }</div>
+                <div>
                 {
                     items && items.length>0 && items.map((item)=>(
-                        (parseInt(item.taskCategoryId)===parseInt(id)&& item.status === "pending")?
+                        (item.status === "pending")?
                             <TaskItem id={item.id} title={item.title} desc={item.description} comments={item.comments} 
                             status= {item.status} taskCategoryId={item.taskCategoryId} dateStarted={item.dateStarted} 
                             dateEnded={item.dateEnded} getData={getData}/>: ''
                         
                     ))
                 }
+                </div>
                 {/* section for completed tasks */}
-                <div className="completed-tasks">
+                <div className="completed-tasks mt-4">
                     <span className="font-bold text-lg text-left">Completed:</span>
                     {
                     items && items.length>0 && items.map((item)=>(
-                        (parseInt(item.taskCategoryId)===parseInt(id)&& item.status === "done")?
+                        (item.status === "done")?
                             <TaskItem id={item.id} title={item.title} desc={item.description} comments={item.comments} 
                             status= {item.status} taskCategoryId={item.taskCategoryId} dateStarted={item.dateStarted} 
                             dateEnded={item.dateEnded} getData={getData}/>: ''
