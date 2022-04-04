@@ -29,7 +29,7 @@ const TaskItem = (props) => {
         var updatedOn = new Date().toISOString();
         comments.push({ message, createdOn, updatedOn });
 
-        const collectionRef = collection(db, "taskCategory");
+        const collectionRef = collection(db, "task");
         const payload= {title:title, description:description, status:status, taskCategoryId: taskCategoryId, comments:comments, dateStarted:dateStarted, dateEnded:dateEnded}
         addDoc(collectionRef,payload);
         addComment();

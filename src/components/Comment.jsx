@@ -1,4 +1,6 @@
 import React, {useState} from 'react';
+import {db} from "../firebase";
+import { setDoc,doc} from "firebase/firestore";
 const Comment = (props) => {
     const [isHidden, setIsHidden]= useState("false");
     // toggles visibility of update comment form
@@ -26,24 +28,12 @@ const Comment = (props) => {
             }
         })
         // comments.push({message, createdOn, updatedOn});
-        const updatedComment= {title, description,status,taskCategoryId, comments,dateStarted, dateEnded};
+        // const updatedComment= {title, description,status,taskCategoryId, comments,dateStarted, dateEnded};
         
-        fetch('http://localhost:8000/tasks/'+props.taskId
-        ,{
-            method: "PUT",
-            headers : { 
-                'Content-Type': 'application/json',
-                'Accept': 'application/json'
-            },
-            body: JSON.stringify(updatedComment)
-        }
-        )
-        .then(()=>{
-            console.log("comment updated");
-            // getData();
-            editComment();
-            props.getData();
-        })
+        const docRef = doc(db, "task", props.id);
+        const payload= {title:title, description:description, status:status, taskCategoryId: taskCategoryId, comments:comments, dateStarted:dateStarted, dateEnded:dateEnded}
+        setDoc(docRef,payload);
+        editComment();
     }
     return ( 
         <div className="Comment">
