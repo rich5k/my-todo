@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import Comment from './Comment';
 const TaskItem = (props) => {
     const [isExpanded, setExpanded] = useState("false");
@@ -28,7 +28,7 @@ const TaskItem = (props) => {
         comments.push({ message, createdOn, updatedOn });
         const newComment = { title, description, status, taskCategoryId, comments, dateStarted, dateEnded };
 
-        fetch('http://localhost:8000/tasks/' + props.id
+        fetch('https://rich5k.github.io/my-todo-data/task.json/' + props.id
             , {
                 method: "PUT",
                 headers: {
@@ -48,7 +48,7 @@ const TaskItem = (props) => {
 
     //deletes item
     const deleteTask = () => {
-        fetch('http://localhost:8000/tasks/' + props.id
+        fetch('https://rich5k.github.io/my-todo-data/task.json/' + props.id
             , {
                 method: "DELETE",
             }
@@ -81,7 +81,7 @@ const TaskItem = (props) => {
         
         const checkedItem = { title, description, status, taskCategoryId, comments, dateStarted, dateEnded };
 
-        fetch('http://localhost:8000/tasks/' + props.id
+        fetch('https://rich5k.github.io/my-todo-data/task.json/' + props.id
             , {
                 method: "PUT",
                 headers: {

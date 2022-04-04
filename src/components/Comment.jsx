@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import React, {useState} from 'react';
 const Comment = (props) => {
     const [isHidden, setIsHidden]= useState("false");
     // toggles visibility of update comment form
@@ -28,7 +28,7 @@ const Comment = (props) => {
         // comments.push({message, createdOn, updatedOn});
         const updatedComment= {title, description,status,taskCategoryId, comments,dateStarted, dateEnded};
         
-        fetch('http://localhost:8000/tasks/'+props.taskId
+        fetch('https://rich5k.github.io/my-todo-data/task.json/'+props.taskId
         ,{
             method: "PUT",
             headers : { 

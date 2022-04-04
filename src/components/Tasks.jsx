@@ -1,6 +1,6 @@
 import Footer from "./Footer";
 import Task from "./Task";
-import {useState,useEffect} from 'react';
+import React,{useState,useEffect} from 'react';
 import PuffLoader from "react-spinners/PuffLoader";
 const Tasks = () => {
     const [name,setName]=useState('');
@@ -10,7 +10,7 @@ const Tasks = () => {
     const color= "#51E24A";
     //gets taskCategory and task data
     const getData=()=>{
-        fetch('http://localhost:8000/taskCategory'
+        fetch('https://rich5k.github.io/my-todo-data/taskCategory.json'
         ,{
         headers : { 
             'Content-Type': 'application/json',
@@ -27,7 +27,7 @@ const Tasks = () => {
             setTasks(myJson);
         });
 
-        fetch('http://localhost:8000/tasks'
+        fetch('https://rich5k.github.io/my-todo-data/task.json'
         ,{
         headers : { 
             'Content-Type': 'application/json',
@@ -60,7 +60,7 @@ const Tasks = () => {
         var updatedOn = new Date().toISOString();
         const task = {name, createdOn,updatedOn};
         
-        fetch('http://localhost:8000/taskCategory'
+        fetch('https://rich5k.github.io/my-todo-data/taskCategory.json'
         ,{
             method: "POST",
             headers : { 

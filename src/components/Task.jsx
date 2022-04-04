@@ -1,8 +1,9 @@
+import React from "react";
 import { useNavigate} from "react-router-dom";
 const Task = (props) => {
     // handles deletion of task category
     const deleteTask =()=>{
-        fetch('http://localhost:8000/taskCategory/'+ props.id
+        fetch('https://rich5k.github.io/my-todo-data/taskCategory.json/'+ props.id
         ,{
             method: "DELETE",
         }

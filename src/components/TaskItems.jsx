@@ -1,5 +1,5 @@
 import { useNavigate, useParams} from "react-router-dom";
-import {useState,useEffect} from 'react';
+import React, {useState,useEffect} from 'react';
 import Footer from "./Footer";
 import TaskItem from "./TaskItem";
 import PuffLoader from "react-spinners/PuffLoader";
@@ -17,7 +17,7 @@ const TaskItems = () => {
     const [description, setDesc]=useState('');
     // gets taskCategory and tasks data
     const getData=()=>{
-        fetch('http://localhost:8000/taskCategory'
+        fetch('https://rich5k.github.io/my-todo-data/taskCategory.json'
         ,{
         headers : { 
             'Content-Type': 'application/json',
@@ -34,7 +34,7 @@ const TaskItems = () => {
             setTasks(myJson);
         });
 
-        fetch('http://localhost:8000/tasks'
+        fetch('https://rich5k.github.io/my-todo-data/task.json'
         ,{
         headers : { 
             'Content-Type': 'application/json',
@@ -72,7 +72,7 @@ const TaskItems = () => {
         var dateEnded = null;
         const task = {title, description,status,taskCategoryId, comments,dateStarted, dateEnded};
         
-        fetch('http://localhost:8000/tasks'
+        fetch('https://rich5k.github.io/my-todo-data/task.json'
         ,{
             method: "POST",
             headers : { 
