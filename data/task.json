@@ -1,0 +1,23 @@
+[
+    {
+        "id": 1,
+        "title": "Learn React Hooks",
+        "description": "Learn all the new awesome react hooks...",
+        "status": "pending",
+        "taskCategoryId": 1,
+        "comments": [
+            {
+                "message": "Hmm, useState is awesome",
+                "createdOn": "2021-09-25T10:30:37.939Z",
+                "updatedOn": "2021-09-25T10:30:37.939Z"
+            },
+            {
+                "message": "Hmm, memo is awesome",
+                "createdOn": "2021-09-25T10:30:37.939Z",
+                "updatedOn": "2021-09-25T10:30:37.939Z"
+            }
+        ],
+        "dateStarted": "2021-09-24T10:30:37.939Z",
+        "dateEnded": "2021-09-28T10:30:37.939Z"
+    }
+]
