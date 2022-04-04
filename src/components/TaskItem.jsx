@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Comment from './Comment';
 import {db} from "../firebase";
-import { collection, onSnapshot,addDoc} from "firebase/firestore";
+import { collection, addDoc} from "firebase/firestore";
 const TaskItem = (props) => {
     const [isExpanded, setExpanded] = useState("false");
     const [isHidden, setIsHidden] = useState("false");
