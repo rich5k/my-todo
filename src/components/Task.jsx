@@ -1,17 +1,13 @@
 import React from "react";
 import { useNavigate} from "react-router-dom";
+import {db} from "../firebase";
+import { doc,deleteDoc} from "firebase/firestore";
 const Task = (props) => {
     // handles deletion of task category
     const deleteTask =()=>{
-        fetch('http://localhost:8000/taskCategory/'+ props.id
-        ,{
-            method: "DELETE",
-        }
-        )
-        .then(()=>{
-            console.log("task deleted");
-            props.getData();
-        })
+        const docRef = doc(db, "taskCategory", props.id);
+        deleteDoc(docRef);
+        props.getData();
     }
     const navigate = useNavigate();
     // handles redirection to task's item page

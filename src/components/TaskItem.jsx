@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Comment from './Comment';
 import {db} from "../firebase";
-import { collection, addDoc} from "firebase/firestore";
+import { doc, setDoc} from "firebase/firestore";
 const TaskItem = (props) => {
     const [isExpanded, setExpanded] = useState("false");
     const [isHidden, setIsHidden] = useState("false");
@@ -29,13 +29,16 @@ const TaskItem = (props) => {
         var updatedOn = new Date().toISOString();
         comments.push({ message, createdOn, updatedOn });
 
-        const collectionRef = collection(db, "task");
+        const docRef = doc(db, "task", props.id);
         const payload= {title:title, description:description, status:status, taskCategoryId: taskCategoryId, comments:comments, dateStarted:dateStarted, dateEnded:dateEnded}
-        addDoc(collectionRef,payload);
+        setDoc(docRef,payload);
         addComment();
         setMessage('');
     }
-
+    useEffect(()=>{
+        props.getData()
+    },[message])
+    
     //deletes item
     const deleteTask = () => {
         fetch('http://localhost:8000/tasks/' + props.id
