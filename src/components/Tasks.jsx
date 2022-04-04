@@ -4,7 +4,7 @@ import React,{useState,useEffect} from 'react';
 import PuffLoader from "react-spinners/PuffLoader";
 import {db} from "../firebase";
 // import { collection } from "firebase/firestore";
-import { collection, onSnapshot,addDoc,doc } from "firebase/firestore";
+import { collection, onSnapshot,addDoc} from "firebase/firestore";
 const Tasks = () => {
     
     const [name,setName]=useState('');
@@ -32,7 +32,7 @@ const Tasks = () => {
                 taskItems.push({...doc.data(),id: doc.id})
 
             });
-            setTasks(taskItems);
+            setItems(taskItems);
         });
 
         // onSnapshot(collection(db, "task"),(querySnapshot)=>{
