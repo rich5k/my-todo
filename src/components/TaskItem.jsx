@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Comment from './Comment';
 import {db} from "../firebase";
-import { doc, setDoc} from "firebase/firestore";
+import { doc, setDoc, deleteDoc} from "firebase/firestore";
 const TaskItem = (props) => {
     const [isExpanded, setExpanded] = useState("false");
     const [isHidden, setIsHidden] = useState("false");
@@ -33,23 +33,17 @@ const TaskItem = (props) => {
         const payload= {title:title, description:description, status:status, taskCategoryId: taskCategoryId, comments:comments, dateStarted:dateStarted, dateEnded:dateEnded}
         setDoc(docRef,payload);
         addComment();
+        props.getData();
         setMessage('');
     }
-    useEffect(()=>{
-        props.getData()
-    },[message])
     
+
     //deletes item
     const deleteTask = () => {
-        fetch('http://localhost:8000/tasks/' + props.id
-            , {
-                method: "DELETE",
-            }
-        )
-            .then(() => {
-                console.log("item deleted");
-                props.getData();
-            })
+        console.log(props.id);
+        const docRef = doc(db, "task", props.id);
+        deleteDoc(docRef);
+        props.getData();
     }
 
     const [isChecked, setIsChecked] = useState(props.status === "pending"?false:true);
@@ -72,22 +66,10 @@ const TaskItem = (props) => {
         var dateStarted = props.dateStarted;
         var dateEnded = new Date().toISOString();
         
-        const checkedItem = { title, description, status, taskCategoryId, comments, dateStarted, dateEnded };
-
-        fetch('http://localhost:8000/tasks/' + props.id
-            , {
-                method: "PUT",
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json'
-                },
-                body: JSON.stringify(checkedItem)
-            }
-        )
-            .then(() => {
-                console.log("item checked");
-                props.getData();
-            })
+        
+        const docRef = doc(db, "task", props.id);
+        const payload= {title:title, description:description, status:status, taskCategoryId: taskCategoryId, comments:comments, dateStarted:dateStarted, dateEnded:dateEnded}
+        setDoc(docRef,payload);
     }
     return (
         <div className="TaskItem bg-white text-blue-600 font-bold my-6 mx-8 rounded-lg pb-4">

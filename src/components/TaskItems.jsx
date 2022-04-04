@@ -27,16 +27,7 @@ const TaskItems = () => {
             setCategoryName(doc.data().name);
             
         })
-        // console.log(cName.data().name);
-        // onSnapshot(collection(db,"taskCategory"),snapshot=>{
-        //     let categories=[];
-        //     console.log(snapshot.docs.map(doc=>(doc.data(),doc.id)));
-        //     snapshot.docs.map(doc=>{
-        //         categories.push({...doc.data(),id: doc.id})
-
-        //     });
-        //     setTasks(categories);
-        // });
+        
 
         onSnapshot(query(collection(db,"task"),where("taskCategoryId","==",id)),snapshot=>{
             let taskItems=[];
@@ -52,7 +43,7 @@ const TaskItems = () => {
     }
     useEffect(()=>{
         getData()
-    },[title,description])
+    },[])
     const [isHidden, setHidden] = useState("false");
     // toggles the visibilty of add item form
     const ToggleClass = () => {
@@ -75,6 +66,7 @@ const TaskItems = () => {
         const payload= {title:title, description:description, status:status, taskCategoryId: taskCategoryId, comments:comments, dateStarted:dateStarted, dateEnded:dateEnded}
         addDoc(collectionRef,payload);
         ToggleClass();
+        getData();
     }
     return ( 
         <div className="TaskItems text-white grid grid-cols-3 mt-8">
@@ -96,9 +88,9 @@ const TaskItems = () => {
                 }</div>
                 <div>
                 {
-                    items && items.length>0 && items.map((item)=>(
+                    items && items.length>0 && items.map((item,index)=>(
                         (item.status === "pending")?
-                            <TaskItem id={item.id} title={item.title} desc={item.description} comments={item.comments} 
+                            <TaskItem key={index} id={item.id} title={item.title} desc={item.description} comments={item.comments} 
                             status= {item.status} taskCategoryId={item.taskCategoryId} dateStarted={item.dateStarted} 
                             dateEnded={item.dateEnded} getData={getData}/>: ''
                         
@@ -109,9 +101,9 @@ const TaskItems = () => {
                 <div className="completed-tasks mt-4">
                     <span className="font-bold text-lg text-left">Completed:</span>
                     {
-                    items && items.length>0 && items.map((item)=>(
+                    items && items.length>0 && items.map((item,index)=>(
                         (item.status === "done")?
-                            <TaskItem id={item.id} title={item.title} desc={item.description} comments={item.comments} 
+                            <TaskItem key={index} id={item.id} title={item.title} desc={item.description} comments={item.comments} 
                             status= {item.status} taskCategoryId={item.taskCategoryId} dateStarted={item.dateStarted} 
                             dateEnded={item.dateEnded} getData={getData}/>: ''
                         
