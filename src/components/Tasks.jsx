@@ -8,7 +8,7 @@ const Tasks = () => {
     
     const [name,setName]=useState('');
     const [tasks,setTasks]=useState([]);
-    const [items,setItems]=useState([]);
+    const [itemNum,setItemNum]=useState(0);
     const loading="true";
     const color= "#51E24A";
     //gets taskCategory and task data
@@ -19,20 +19,13 @@ const Tasks = () => {
             console.log(snapshot.docs.map(doc=>(doc.data(),doc.id)));
             snapshot.docs.map(doc=>{
                 categories.push({...doc.data(),id: doc.id})
+                
 
             });
             setTasks(categories);
         });
 
-        onSnapshot(collection(db,"task"),snapshot=>{
-            let taskItems=[];
-            console.log(snapshot.docs.map(doc=>(doc.data(),doc.id)));
-            snapshot.docs.map(doc=>{
-                taskItems.push({...doc.data(),id: doc.id})
-
-            });
-            setItems(taskItems);
-        });
+       
 
         
     }
@@ -57,20 +50,7 @@ const Tasks = () => {
         ToggleClass();
     }
 
-    const calcItemNum=(taskId)=>{
-        let itemNum=0;
-        
-        onSnapshot(query(collection(db,"task"),where("taskCategoryId","==",taskId)),snapshot=>{
-            
-            // console.log(snapshot.docs.map(doc=>(doc.data(),doc.id)));
-            snapshot.docs.map(doc=>{
-                itemNum=itemNum+1;
-                console.log(doc.data());
-            });
-            
-        });
-        return itemNum;
-    }
+   
     return ( 
         <div className="Tasks text-center mt-8 grid grid-cols-3">
             <div></div>
@@ -81,7 +61,7 @@ const Tasks = () => {
                     (tasks && tasks.length>0 )?
                     tasks.map((task,index)=>(
                         
-                        <Task key={index} id={task.id} name={task.name} date={task.updatedOn} itemNum={calcItemNum(task.id)} getData={getData} />
+                        <Task key={index} id={task.id} name={task.name} date={task.updatedOn} getData={getData} />
                         
                     )):
                     // show spinner when getting data
