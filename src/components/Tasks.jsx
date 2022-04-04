@@ -4,11 +4,9 @@ import React,{useState,useEffect} from 'react';
 import PuffLoader from "react-spinners/PuffLoader";
 import {db} from "../firebase";
 // import { collection } from "firebase/firestore";
-import { collection, onSnapshot } from "firebase/firestore";
+import { collection, onSnapshot,addDoc,doc } from "firebase/firestore";
 const Tasks = () => {
-    // const ref1 = firebase.firestore().collection("taskCategory");
-    // const ref2 = firebase.firestore().collection("task");
-    // console.log(ref1);
+    
     const [name,setName]=useState('');
     const [tasks,setTasks]=useState([]);
     const [items,setItems]=useState([]);
@@ -16,39 +14,7 @@ const Tasks = () => {
     const color= "#51E24A";
     //gets taskCategory and task data
     const getData=()=>{
-        // fetch('http://localhost:8000/taskCategory'
-        // ,{
-        // headers : { 
-        //     'Content-Type': 'application/json',
-        //     'Accept': 'application/json'
-        // }
-        // }
-        // )
-        // .then(function(response){
-        //     // console.log(response)
-        //     return response.json();
-        // })
-        // .then(function(myJson) {
-        //     //console.log(myJson);
-        //     setTasks(myJson);
-        // });
-
-        // fetch('http://localhost:8000/tasks'
-        // ,{
-        // headers : { 
-        //     'Content-Type': 'application/json',
-        //     'Accept': 'application/json'
-        // }
-        // }
-        // )
-        // .then(function(response){
-        //     // console.log(response)
-        //     return response.json();
-        // })
-        // .then(function(myJson) {
-        //     //console.log(myJson);
-        //     setItems(myJson);
-        // });
+        
         onSnapshot(collection(db,"taskCategory"),snapshot=>{
             let categories=[];
             console.log(snapshot.docs.map(doc=>(doc.data(),doc.id)));
@@ -91,23 +57,11 @@ const Tasks = () => {
         e.preventDefault();
         var createdOn = new Date().toISOString();
         var updatedOn = new Date().toISOString();
-        const task = {name, createdOn,updatedOn};
         
-        fetch('http://localhost:8000/taskCategory'
-        ,{
-            method: "POST",
-            headers : { 
-                'Content-Type': 'application/json',
-                'Accept': 'application/json'
-            },
-            body: JSON.stringify(task)
-        }
-        )
-        .then(()=>{
-            console.log("new task category added");
-            getData();
-            ToggleClass();
-        })
+        const collectionRef = collection(db, "taskCategory");
+        const payload= {name:name, createdOn:createdOn, updatedOn:updatedOn}
+        addDoc(collectionRef,payload);
+        ToggleClass();
     }
 
     const calcItemNum=(taskId)=>{
