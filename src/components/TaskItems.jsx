@@ -4,7 +4,7 @@ import Footer from "./Footer";
 import TaskItem from "./TaskItem";
 import PuffLoader from "react-spinners/PuffLoader";
 import {db} from "../firebase";
-import { collection, onSnapshot,addDoc, getDoc, doc} from "firebase/firestore";
+import { collection, onSnapshot,addDoc, getDoc, doc,query,where} from "firebase/firestore";
 const TaskItems = () => {
     const {id}= useParams();
     const navigate = useNavigate();
@@ -38,20 +38,21 @@ const TaskItems = () => {
         //     setTasks(categories);
         // });
 
-        onSnapshot(collection(db,"task"),snapshot=>{
+        onSnapshot(query(collection(db,"task"),where("taskCategoryId","==",id)),snapshot=>{
             let taskItems=[];
-            console.log(snapshot.docs.map(doc=>(doc.data(),doc.id)));
+            // console.log(snapshot.docs.map(doc=>(doc.data(),doc.id)));
             snapshot.docs.map(doc=>{
                 taskItems.push({...doc.data(),id: doc.id})
 
             });
+            console.log(taskItems);
             setItems(taskItems);
         });
 
     }
     useEffect(()=>{
         getData()
-    },[])
+    },[title,description])
     const [isHidden, setHidden] = useState("false");
     // toggles the visibilty of add item form
     const ToggleClass = () => {
@@ -64,13 +65,13 @@ const TaskItems = () => {
     const handleSubmit=(e)=>{
         e.preventDefault();
         var status = "pending";
-        var taskCategoryId = parseInt(id);
+        var taskCategoryId = id;
         var comments= [];
         var dateStarted = new Date().toISOString();
         var dateEnded = null;
         // const task = {title, description,status,taskCategoryId, comments,dateStarted, dateEnded};
         
-        const collectionRef = collection(db, "taskCategory");
+        const collectionRef = collection(db, "task");
         const payload= {title:title, description:description, status:status, taskCategoryId: taskCategoryId, comments:comments, dateStarted:dateStarted, dateEnded:dateEnded}
         addDoc(collectionRef,payload);
         ToggleClass();
