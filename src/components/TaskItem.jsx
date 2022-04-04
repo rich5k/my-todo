@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import Comment from './Comment';
+import {db} from "../firebase";
+import { collection, onSnapshot,addDoc} from "firebase/firestore";
 const TaskItem = (props) => {
     const [isExpanded, setExpanded] = useState("false");
     const [isHidden, setIsHidden] = useState("false");
@@ -19,31 +21,19 @@ const TaskItem = (props) => {
         var title = props.title;
         var description = props.desc;
         var status = props.status;
-        var taskCategoryId = parseInt(props.taskCategoryId);
+        var taskCategoryId = props.taskCategoryId;
         var comments = props.comments;
         var dateStarted = props.dateStarted;
         var dateEnded = props.dateEnded;
         var createdOn = new Date().toISOString();
         var updatedOn = new Date().toISOString();
         comments.push({ message, createdOn, updatedOn });
-        const newComment = { title, description, status, taskCategoryId, comments, dateStarted, dateEnded };
 
-        fetch('http://localhost:8000/tasks/' + props.id
-            , {
-                method: "PUT",
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json'
-                },
-                body: JSON.stringify(newComment)
-            }
-        )
-            .then(() => {
-                console.log("new comment added");
-                // getData();
-                addComment();
-                setMessage('');
-            })
+        const collectionRef = collection(db, "taskCategory");
+        const payload= {title:title, description:description, status:status, taskCategoryId: taskCategoryId, comments:comments, dateStarted:dateStarted, dateEnded:dateEnded}
+        addDoc(collectionRef,payload);
+        addComment();
+        setMessage('');
     }
 
     //deletes item
