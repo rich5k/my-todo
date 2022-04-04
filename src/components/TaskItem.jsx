@@ -59,8 +59,7 @@ const TaskItem = (props) => {
             })
     }
 
-    const [isChecked, setIsChecked] = useState(props.status === "pending"?"false":"true");
-    console.log(isChecked,props.status);
+    const [isChecked, setIsChecked] = useState(props.status === "pending"?false:true);
 
     //handles updating the status of the item when checked
     const handleCheck = (e) => {
@@ -147,9 +146,9 @@ const TaskItem = (props) => {
                             <button onClick={handleSubmit} class="mt-4 text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">Add</button>
                         </form>
                         {props.comments && props.comments.length > 0 && props.comments.map((comment, index) => (
-                            <Comment id={index} message={comment.message} title={props.title} desc={props.desc}
+                            <Comment id={index} message={comment.message} title={props.title} desc={props.desc} status={props.status}
                                 taskCategoryId={props.taskCategoryId} comments={props.comments} dateStarted={props.dateStarted}
-                                dateEnded={props.dateEnded} createdOn={comment.createdOn} getData={props.getData()} />
+                                dateEnded={props.dateEnded} taskId={props.id} createdOn={comment.createdOn} getData={props.getData()} />
                         ))}
                     </div>
                 </div>

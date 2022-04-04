@@ -30,7 +30,7 @@ const TaskItems = () => {
             return response.json();
         })
         .then(function(myJson) {
-            console.log(myJson);
+            //console.log(myJson);
             setTasks(myJson);
         });
 
@@ -47,7 +47,7 @@ const TaskItems = () => {
             return response.json();
         })
         .then(function(myJson) {
-            console.log(myJson);
+            //console.log(myJson);
             setItems(myJson);
         });
     }
@@ -101,7 +101,7 @@ const TaskItems = () => {
                 <div className="text-3xl text-white font-bold text-center">
                     {
                     (tasks && tasks.length>0)? tasks.map((task)=>(
-                        // console.log(tasks)
+                        
                         (parseInt(task.id)===parseInt(id))?
                             task.name : ''
                         

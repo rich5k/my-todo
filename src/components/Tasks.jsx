@@ -6,7 +6,6 @@ const Tasks = () => {
     const [name,setName]=useState('');
     const [tasks,setTasks]=useState([]);
     const [items,setItems]=useState([]);
-    const [itemNum, setItemNum]=useState(0);
     const loading="true";
     const color= "#51E24A";
     //gets taskCategory and task data
@@ -24,7 +23,7 @@ const Tasks = () => {
             return response.json();
         })
         .then(function(myJson) {
-            console.log(myJson);
+            //console.log(myJson);
             setTasks(myJson);
         });
 
@@ -41,7 +40,7 @@ const Tasks = () => {
             return response.json();
         })
         .then(function(myJson) {
-            console.log(myJson);
+            //console.log(myJson);
             setItems(myJson);
         });
     }
@@ -78,12 +77,16 @@ const Tasks = () => {
         })
     }
 
-    // const calcItemNum=(taskId)=>{
-    //     items.map((item)=>(
-    //         item.taskCategoryId===taskId?
-    //         setItemNum(itemNum+1):''
-    //      ))
-    // }
+    const calcItemNum=(taskId)=>{
+        let itemNum=0;
+        items.map((item)=>{
+            if(item.taskCategoryId===taskId){
+                itemNum=itemNum+1;
+            }
+            
+        })
+        return itemNum;
+    }
     return ( 
         <div className="Tasks text-center mt-8 grid grid-cols-3">
             <div></div>
@@ -92,10 +95,8 @@ const Tasks = () => {
                 {
                     (tasks && items && tasks.length>0 && items.length>0)?
                     tasks.map((task)=>(
-                        // console.log(tasks)
                         
-                            // calcItemNum(task.id),
-                            <Task key={task.id} id={task.id} name={task.name} date={task.updatedOn} itemNum={itemNum} getData={getData} />
+                        <Task key={task.id} id={task.id} name={task.name} date={task.updatedOn} itemNum={calcItemNum(task.id)} getData={getData} />
                         
                     )):
                     // show spinner when getting data
